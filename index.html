@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandaue Tax Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .step-card { transition: transform 0.2s; }
+        .step-card:active { transform: scale(0.98); }
+        body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="p-4 pb-20">
+
+    <div class="text-center mb-6 pt-4">
+        <h1 class="text-2xl font-bold text-blue-900">Mandaue Property Tax</h1>
+        <p class="text-gray-600">Quick Online Assessment & Payment Guide</p>
+    </div>
+
+    <div class="step-card bg-white rounded-2xl p-5 mb-4 shadow-sm border-l-4 border-blue-600">
+        <div class="flex items-center mb-3">
+            <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">1</span>
+            <h2 class="font-bold text-lg text-gray-800">Get Your Assessment</h2>
+        </div>
+        <p class="text-sm text-gray-600 mb-4">Choose how you want to receive your bill:</p>
+        <div class="grid grid-cols-2 gap-3">
+            <a href="https://www.mandauecity.gov.ph/e-services/" class="bg-blue-50 text-blue-700 text-center py-3 rounded-xl text-sm font-semibold border border-blue-100">
+                🌐 Portal Link
+            </a>
+            <a href="mailto:cto@mandauecity.gov.ph?subject=Assessment%20Request&body=Hi%20Mandaue%20Treasurer,%20I%20would%20like%20to%20request%20an%20assessment%20for%20Tax%20Dec:%20" class="bg-blue-50 text-blue-700 text-center py-3 rounded-xl text-sm font-semibold border border-blue-100">
+                📧 Email City
+            </a>
+        </div>
+    </div>
+
+    <div class="step-card bg-white rounded-2xl p-5 mb-4 shadow-sm border-l-4 border-green-500">
+        <div class="flex items-center mb-3">
+            <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">2</span>
+            <h2 class="font-bold text-lg text-gray-800">Fast Payment</h2>
+        </div>
+        <div class="space-y-3">
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span class="text-sm font-medium">🔵 GCash / Maya</span>
+                <span class="text-xs text-gray-500 italic">Bills > Govt > Mandaue</span>
+            </div>
+            <a href="https://www.lbp-eservices.com/egps/portal/index.jsp" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span class="text-sm font-medium text-green-700 underline">🏦 Landbank Link.Biz</span>
+                <span class="text-xs text-gray-400">→</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="step-card bg-white rounded-2xl p-5 mb-6 shadow-sm border-l-4 border-orange-400">
+        <div class="flex items-center mb-2">
+            <span class="bg-orange-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">3</span>
+            <h2 class="font-bold text-lg text-gray-800">Final Step</h2>
+        </div>
+        <p class="text-xs text-gray-500 leading-relaxed">
+            Email your payment screenshot to <strong>cto@mandauecity.gov.ph</strong> to receive your Official Receipt (OR).
+        </p>
+    </div>
+
+    <div class="bg-yellow-100 border border-yellow-200 rounded-xl p-4 text-center mb-6">
+        <p class="text-yellow-800 text-sm font-bold">⚠️ PROMPT PAYMENT DISCOUNT</p>
+        <p class="text-yellow-700 text-xs">Pay before March 31 for up to 10% off!</p>
+    </div>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 flex items-center justify-between px-6">
+        <div>
+            <p class="text-xs text-gray-500 font-medium">ASSISTANCE BY:</p>
+            <p class="text-sm font-bold text-gray-800">[Your Name Here]</p>
+        </div>
+        <a href="tel:YOUR_NUMBER_HERE" class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold text-sm">
+            Call Now
+        </a>
+    </div>
+
+</body>
+</html>
