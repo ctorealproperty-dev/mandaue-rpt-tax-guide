@@ -1,82 +1,571 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mandaue Tax Assistant</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
     <style>
-        .step-card { transition: transform 0.2s; }
-        .step-card:active { transform: scale(0.98); }
-        body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+      .step-card {
+        transition: transform 0.2s;
+      }
+      .step-card:active {
+        transform: scale(0.98);
+      }
+      body {
+        background-color: #f3f4f6;
+        font-family: "Inter", sans-serif;
+      }
+      .hidden {
+        display: none;
+      }
+      .tax-selector-btn {
+        transition: all 0.3s ease;
+      }
+      .tax-selector-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      .tax-selector-btn.active {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Custom styling for details/summary */
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      details[open] summary svg {
+        transform: rotate(180deg);
+      }
+
+      .amnesty-card {
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 0.5rem;
+        }
+        .step-card {
+          padding: 1rem;
+          margin-bottom: 0.75rem;
+        }
+      }
+      @media (min-width: 768px) {
+        .step-card {
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
     </style>
-</head>
-<body class="p-4 pb-20">
+  </head>
+  <body class="p-2 sm:p-4 pb-20">
+    <!-- Tax Type Selection Page -->
+    <div id="taxSelectionPage" class="text-center">
+      <div class="mb-8 sm:mb-10 pt-4 sm:pt-8">
+        <h1
+          class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-2"
+        >
+          Mandaue E-Services
+        </h1>
+        <p class="text-sm sm:text-base text-gray-600">Select Tax Type</p>
+      </div>
 
-    <div class="text-center mb-6 pt-4">
-        <h1 class="text-2xl font-bold text-blue-900">Mandaue Property Tax</h1>
-        <p class="text-gray-600">Quick Online Assessment & Payment Guide</p>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto"
+      >
+        <button
+          onclick="selectTaxType('realProperty')"
+          class="tax-selector-btn bg-blue-600 hover:bg-blue-700 text-white rounded-2xl p-6 sm:p-8 shadow-md text-center transform transition"
+        >
+          <div class="mb-3">
+            <span class="material-icons text-5xl sm:text-6xl">home</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold mb-2">Real Property Tax</h2>
+          <p class="text-sm text-blue-100">
+            Assessment & Payment for Properties
+          </p>
+        </button>
+
+        <button
+          onclick="selectTaxType('business')"
+          class="tax-selector-btn bg-green-600 hover:bg-green-700 text-white rounded-2xl p-6 sm:p-8 shadow-md text-center transform transition"
+        >
+          <div class="mb-3">
+            <span class="material-icons text-5xl sm:text-6xl">business</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold mb-2">Business Tax</h2>
+          <p class="text-sm text-green-100">
+            Assessment & Payment for Business
+          </p>
+        </button>
+      </div>
     </div>
 
-    <div class="step-card bg-white rounded-2xl p-5 mb-4 shadow-sm border-l-4 border-blue-600">
-        <div class="flex items-center mb-3">
-            <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">1</span>
-            <h2 class="font-bold text-lg text-gray-800">Get Your Assessment</h2>
-        </div>
-        <p class="text-sm text-gray-600 mb-4">Choose how you want to receive your bill:</p>
-        <div class="grid grid-cols-2 gap-3">
-            <a href="https://www.mandauecity.gov.ph/e-services/" class="bg-blue-50 text-blue-700 text-center py-3 rounded-xl text-sm font-semibold border border-blue-100">
-                🌐 Portal Link
-            </a>
-            <a href="mailto:cto@mandauecity.gov.ph?subject=Assessment%20Request&body=Hi%20Mandaue%20Treasurer,%20I%20would%20like%20to%20request%20an%20assessment%20for%20Tax%20Dec:%20" class="bg-blue-50 text-blue-700 text-center py-3 rounded-xl text-sm font-semibold border border-blue-100">
-                📧 Email City
-            </a>
-        </div>
-    </div>
-
-    <div class="step-card bg-white rounded-2xl p-5 mb-4 shadow-sm border-l-4 border-green-500">
-        <div class="flex items-center mb-3">
-            <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">2</span>
-            <h2 class="font-bold text-lg text-gray-800">Fast Payment</h2>
-        </div>
-        <div class="space-y-3">
-            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span class="text-sm font-medium">🔵 GCash / Maya</span>
-                <span class="text-xs text-gray-500 italic">Bills > Govt > Mandaue</span>
-            </div>
-            <a href="https://www.lbp-eservices.com/egps/portal/index.jsp" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span class="text-sm font-medium text-green-700 underline">🏦 Landbank Link.Biz</span>
-                <span class="text-xs text-gray-400">→</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="step-card bg-white rounded-2xl p-5 mb-6 shadow-sm border-l-4 border-orange-400">
-        <div class="flex items-center mb-2">
-            <span class="bg-orange-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">3</span>
-            <h2 class="font-bold text-lg text-gray-800">Final Step</h2>
-        </div>
-        <p class="text-xs text-gray-500 leading-relaxed">
-            Email your payment screenshot to <strong>cto@mandauecity.gov.ph</strong> to receive your Official Receipt (OR).
-        </p>
-    </div>
-
-    <div class="bg-yellow-100 border border-yellow-200 rounded-xl p-4 text-center mb-6">
-        <p class="text-yellow-800 text-sm font-bold">⚠️ PROMPT PAYMENT DISCOUNT</p>
-        <p class="text-yellow-700 text-xs">Pay before March 31 for up to 10% off!</p>
-    </div>
-
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t p-3 flex items-center justify-between px-6">
+    <!-- Main Content Page -->
+    <div id="mainContentPage" class="hidden">
+      <div
+        class="text-center mb-4 sm:mb-6 pt-2 sm:pt-4 flex items-center justify-between"
+      >
+        <button
+          onclick="goBack()"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1"
+        >
+          <span class="material-icons text-base">arrow_back</span>
+          <span>Back</span>
+        </button>
         <div>
-            <p class="text-xs text-gray-500 font-medium">ASSISTANCE BY:</p>
-            <p class="text-sm font-bold text-gray-800">Joepert Gingco</p>
+          <h1
+            class="text-xl sm:text-2xl md:text-3xl font-bold text-blue-900"
+            id="pageTitle"
+          >
+            Real Property Tax
+          </h1>
         </div>
-        <a href="230-4500" class="bg-blue-600 text-white px-5 py-2 rounded-full font-bold text-sm">
-            Call Now
-        </a>
+        <div style="width: 80px"></div>
+      </div>
+
+      <div
+        class="step-card bg-white rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4 shadow-sm border-l-4 border-blue-600"
+      >
+        <div class="flex items-center mb-3">
+          <span
+            class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 flex-shrink-0"
+            >1</span
+          >
+          <h2 class="font-bold text-base sm:text-lg text-gray-800">
+            Get Your Assessment
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-600 mb-4">
+          Choose how you want to receive your bill:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+          <a
+            id="portalLink"
+            href="https://www.mandauecity.gov.ph/e-services/"
+            class="bg-blue-50 text-blue-700 text-center py-2 sm:py-3 px-2 rounded-xl text-xs sm:text-sm font-semibold border border-blue-100 flex items-center justify-center gap-2 hover:bg-blue-100 transition"
+          >
+            <span class="material-icons text-sm sm:text-base">language</span>
+            <span>Portal Link</span>
+          </a>
+          <a
+            href="mailto:cto@mandauecity.gov.ph?subject=Assessment%20Request&body=Hi%20Mandaue%20Treasurer,%20I%20would%20like%20to%20request%20an%20assessment%20for%20Tax%20Dec:%20"
+            class="bg-blue-50 text-blue-700 text-center py-2 sm:py-3 px-2 rounded-xl text-xs sm:text-sm font-semibold border border-blue-100 flex items-center justify-center gap-2 hover:bg-blue-100 transition"
+          >
+            <span class="material-icons text-sm sm:text-base">email</span>
+            <span>Email City</span>
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="step-card bg-white rounded-2xl p-4 sm:p-5 mb-3 sm:mb-4 shadow-sm border-l-4 border-orange-400"
+      >
+        <div class="flex items-center mb-3">
+          <span
+            class="bg-orange-400 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 flex-shrink-0"
+            >2</span
+          >
+          <h2 class="font-bold text-base sm:text-lg text-gray-800">
+            Fast Payment
+          </h2>
+        </div>
+        <div class="space-y-2 sm:space-y-3">
+          <div
+            class="flex items-center justify-between p-2 sm:p-3 bg-gray-50 rounded-lg flex-wrap gap-2"
+          >
+            <span class="text-xs sm:text-sm font-medium flex items-center gap-2"
+              ><span class="material-icons text-sm sm:text-base"
+                >mobile_friendly</span
+              ><span>GCash / Maya</span></span
+            >
+            <span class="text-xs text-gray-500 italic"
+              >Bills > Govt > Mandaue</span
+            >
+          </div>
+          <a
+            href="https://epaymentportal.landbank.com/pay1.php?code=c240SFQlMkJyZzV2TzlldlpwaEJ3bmF2VTlUTUVtS0h2c2x6Z2s2c3JISVBNPQ=="
+            class="flex items-center justify-between p-2 sm:p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
+          >
+            <span
+              class="text-xs sm:text-sm font-medium text-green-700 underline flex items-center gap-2"
+              ><span class="material-icons text-sm sm:text-base"
+                >account_balance</span
+              ><span>Landbank Link.Biz</span></span
+            >
+            <span class="text-xs text-gray-400">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="step-card bg-white rounded-2xl p-4 sm:p-5 mb-4 sm:mb-6 shadow-sm border-l-4 border-green-500"
+      >
+        <div class="flex items-center mb-2">
+          <span
+            class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 flex-shrink-0"
+            >3</span
+          >
+          <h2 class="font-bold text-base sm:text-lg text-gray-800">
+            Final Step
+          </h2>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-500 leading-relaxed">
+          Email your payment screenshot to
+          <strong>cto@mandauecity.gov.ph</strong> to receive your Official
+          Receipt (OR).
+        </p>
+      </div>
+
+      <div
+        class="bg-yellow-100 border border-yellow-200 rounded-xl p-3 sm:p-4 text-center mb-4 sm:mb-6"
+      >
+        <p class="text-yellow-800 text-xs sm:text-sm font-bold">
+          ⚠️ PROMPT PAYMENT DISCOUNT
+        </p>
+        <p class="text-yellow-700 text-xs">
+          Pay before March 31 for up to 10% off!
+        </p>
+      </div>
     </div>
 
-</body>
+    <!-- FAQ Page -->
+    <div id="faqPage" class="hidden max-w-3xl mx-auto">
+      <div
+        class="text-center mb-4 sm:mb-6 pt-2 sm:pt-4 flex items-center justify-between"
+      >
+        <button
+          onclick="goBackFromFaq()"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition flex items-center gap-1"
+        >
+          <span class="material-icons text-base">arrow_back</span>
+          <span>Back</span>
+        </button>
+        <div>
+          <h1
+            class="text-xl sm:text-2xl md:text-3xl font-bold text-blue-900"
+            id="faqTitle"
+          >
+            Mandaue City RPT FAQ
+          </h1>
+        </div>
+        <div style="width: 80px"></div>
+      </div>
 
+      <!-- Amnesty Alert -->
+      <div
+        class="amnesty-card rounded-2xl p-6 mb-8 text-white shadow-xl relative overflow-hidden"
+      >
+        <div class="relative z-10">
+          <div class="flex items-center gap-2 mb-2">
+            <span
+              class="bg-red-500 text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wider"
+              >Urgent</span
+            >
+            <h2 class="text-xl font-bold">RPVARA Tax Amnesty 2026</h2>
+          </div>
+          <p class="text-blue-100 mb-4 text-sm leading-relaxed">
+            Settle your unpaid taxes from July 5, 2024, or earlier and get
+            <strong>100% of penalties and interests waived</strong>.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row gap-4 items-start sm:items-center"
+          >
+            <div
+              class="bg-white/10 px-4 py-2 rounded-lg border border-white/20"
+            >
+              <span class="block text-xs uppercase text-blue-200"
+                >Deadline to Avail</span
+              >
+              <span class="font-bold">July 5, 2026</span>
+            </div>
+          </div>
+        </div>
+        <!-- Decorative Icon -->
+        <svg
+          class="absolute right-[-20px] bottom-[-20px] w-40 h-40 text-white/5"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+          />
+        </svg>
+      </div>
+
+      <!-- FAQ Sections -->
+      <div class="space-y-4 mb-8">
+        <!-- Question 1 -->
+        <details
+          class="group bg-white rounded-xl shadow-sm border border-slate-200"
+          open
+        >
+          <summary
+            class="flex items-center justify-between p-5 cursor-pointer list-none"
+          >
+            <span class="text-lg font-semibold text-slate-800"
+              >What are the payment deadlines?</span
+            >
+            <svg
+              class="w-5 h-5 text-slate-500 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 border-t border-slate-50 pt-4">
+            <p class="mb-4">
+              You can choose between full annual payment or quarterly
+              installments:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3 bg-blue-50 rounded-lg">
+                <span class="block font-bold text-blue-800">Annual (Full)</span>
+                On or before
+                <span class="font-semibold underline">March 31, 2026</span>
+                <span
+                  class="block text-xs text-blue-600 mt-1 font-medium italic"
+                  >Eligible for 10% discount*</span
+                >
+              </div>
+              <div class="p-3 bg-slate-50 rounded-lg">
+                <span class="block font-bold text-slate-800"
+                  >Quarterly Dates</span
+                >
+                Q1: Mar 31 | Q2: June 30<br />
+                Q3: Sept 30 | Q4: Dec 31
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <!-- Question 2 -->
+        <details
+          class="group bg-white rounded-xl shadow-sm border border-slate-200"
+        >
+          <summary
+            class="flex items-center justify-between p-5 cursor-pointer list-none"
+          >
+            <span class="text-lg font-semibold text-slate-800"
+              >How do I pay via GCash? (Step-by-Step)</span
+            >
+            <svg
+              class="w-5 h-5 text-slate-500 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 border-t border-slate-50 pt-4">
+            <ol class="list-decimal list-inside space-y-2">
+              <li>
+                Open the <strong>GCash App</strong> and tap
+                <strong>Bills</strong>.
+              </li>
+              <li>Select <strong>Government</strong> as the category.</li>
+              <li>Search for <strong>Mandaue City Government</strong>.</li>
+              <li>
+                Enter your <strong>Tax Declaration Number (TDN)</strong> and the
+                amount.
+              </li>
+              <li>
+                Once paid, save the e-receipt and
+                <strong>must email it to cto@mandauecity.gov.ph</strong> with
+                your name and property details to update the official records.
+              </li>
+            </ol>
+          </div>
+        </details>
+
+        <!-- Question 3 -->
+        <details
+          class="group bg-white rounded-xl shadow-sm border border-slate-200"
+        >
+          <summary
+            class="flex items-center justify-between p-5 cursor-pointer list-none"
+          >
+            <span class="text-lg font-semibold text-slate-800"
+              >Paying through Landbank LinkBiz Portal</span
+            >
+            <svg
+              class="w-5 h-5 text-slate-500 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 border-t border-slate-50 pt-4">
+            <p class="mb-3">
+              Best for owners living outside Mandaue City or those using other
+              bank accounts:
+            </p>
+            <ul class="space-y-2 mb-4">
+              <li class="flex items-start gap-2">
+                <span class="text-blue-500 font-bold">•</span>
+                Go to
+                <a
+                  href="https://www.lbp-eservices.com/egps/portal/index.jsp"
+                  class="text-blue-600 underline"
+                  >Landbank LinkBizPortal</a
+                >.
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-blue-500 font-bold">•</span>
+                Select <strong>Mandaue City Government</strong> as the Merchant.
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-blue-500 font-bold">•</span>
+                Select <strong>Real Property Tax</strong> as the payment type.
+              </li>
+            </ul>
+            <div
+              class="bg-amber-50 p-3 rounded-lg border-l-4 border-amber-400 text-sm"
+            >
+              <strong>Pro Tip:</strong> Ensure you have your Tax Declaration
+              Number ready before starting the process.
+            </div>
+          </div>
+        </details>
+
+        <!-- Question 4 -->
+        <details
+          class="group bg-white rounded-xl shadow-sm border border-slate-200"
+        >
+          <summary
+            class="flex items-center justify-between p-5 cursor-pointer list-none"
+          >
+            <span class="text-lg font-semibold text-slate-800"
+              >What are the requirements for walk-ins?</span
+            >
+            <svg
+              class="w-5 h-5 text-slate-500 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </summary>
+          <div class="px-5 pb-5 text-slate-600 border-t border-slate-50 pt-4">
+            <p>
+              Visit the <strong>City Treasurer's Office</strong> at Mandaue City
+              Hall. You will need:
+            </p>
+            <ul class="list-disc list-inside mt-2 space-y-1">
+              <li>Copy of your Latest Tax Declaration.</li>
+              <li>Previous year's Official Receipt (OR).</li>
+              <li>Valid ID (for owner or authorized representative).</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-12 text-center p-6 border-t border-slate-200">
+        <p class="text-slate-500 text-sm">
+          Need more help? Contact the City Treasurer's Office:<br />
+          <span class="font-semibold">cto@mandauecity.gov.ph</span> | (032)
+          230-4500
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="fixed bottom-0 left-0 right-0 bg-white border-t p-2 sm:p-3 flex flex-col sm:flex-row items-center justify-between px-3 sm:px-6 gap-3 sm:gap-0"
+    >
+      <div>
+        <p class="text-xs text-gray-500 font-medium">ASSISTANCE BY:</p>
+        <p class="text-xs sm:text-sm font-bold text-gray-800">Joepert Gingco</p>
+      </div>
+      <div class="flex gap-2">
+        <button
+          id="faqBtn"
+          onclick="showFaq()"
+          class="bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-bold text-xs sm:text-sm hover:bg-purple-700 transition hidden"
+        >
+          FAQ
+        </button>
+        <a
+          href="230-4500"
+          class="bg-blue-600 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs sm:text-sm hover:bg-blue-700 transition w-full sm:w-auto text-center"
+        >
+          Call Now
+        </a>
+      </div>
+    </div>
+
+    <script>
+      function selectTaxType(type) {
+        document.getElementById("taxSelectionPage").classList.add("hidden");
+        document.getElementById("mainContentPage").classList.remove("hidden");
+        document.getElementById("faqBtn").classList.remove("hidden");
+
+        const portalLink = document.getElementById("portalLink");
+        const pageTitle = document.getElementById("pageTitle");
+        const faqTitle = document.getElementById("faqTitle");
+
+        if (type === "business") {
+          portalLink.href = "https://bpbc.ibpls.com/mandauecitycebu/";
+          pageTitle.textContent = "Business Tax";
+          faqTitle.textContent = "Mandaue City Business Tax FAQ";
+        } else {
+          portalLink.href = "https://www.mandauecity.gov.ph/e-services/";
+          pageTitle.textContent = "Real Property Tax";
+          faqTitle.textContent = "Mandaue City RPT FAQ";
+        }
+      }
+
+      function goBack() {
+        document.getElementById("mainContentPage").classList.add("hidden");
+        document.getElementById("faqPage").classList.add("hidden");
+        document.getElementById("taxSelectionPage").classList.remove("hidden");
+        document.getElementById("faqBtn").classList.add("hidden");
+      }
+
+      function showFaq() {
+        document.getElementById("mainContentPage").classList.add("hidden");
+        document.getElementById("faqPage").classList.remove("hidden");
+      }
+
+      function goBackFromFaq() {
+        document.getElementById("faqPage").classList.add("hidden");
+        document.getElementById("mainContentPage").classList.remove("hidden");
+      }
+    </script>
+  </body>
 </html>
-
